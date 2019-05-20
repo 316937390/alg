@@ -28,4 +28,43 @@ print(find(lst,0,len(lst)-1,1))
 print(find(lst,0,len(lst)-1,2))
 print(find(lst,0,len(lst)-1,3))
 print(find(lst,0,len(lst)-1,7))
-            
+
+import Queue
+q = Queue.Queue()
+
+for i in range(5):
+    q.put(i)
+
+while not q.empty():
+    print(q.get())
+##图：邻接表存储
+graph = {0:[1,3],1:[0,2,4],2:[1,5],3:[0,4],4:[1,3,5,6],5:[2,4,7],6:[4,7],7:[5,6]}
+##广度优先搜索：用户的3度好友关系
+def bfs(s,deg):
+    v = 8 #顶点个数
+    visited = {}
+    prev = {}
+    que = Queue.Queue()
+    for i in range(v):
+        visited[i] = False
+        prev[i] = -1
+    que.put(s)
+    visited[s] = True
+    dist = {} ##记录每个顶点与s的距离
+    dist[s] = 0
+    friends = []
+    while not que.empty():
+        ele = que.get()
+        for i in graph.get(ele):
+            if not visited.get(i):
+                dist[i] = dist[ele]+1
+                if dist[i] > deg:
+                    break
+                prev[i] = ele
+                visited[i] = True
+                que.put(i)
+                friends.append(i)
+    return friends,prev
+
+print(bfs(0,4))
+
