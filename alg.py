@@ -66,5 +66,29 @@ def bfs(s,deg):
                 friends.append(i)
     return friends,prev
 
-print(bfs(0,4))
+print(bfs(1,2))
 
+##深度优先搜索：用户的3度好友关系
+def dfs(s,deg):
+    v = 8 #顶点个数
+    visited = {}
+    prev = {}
+    friends = []
+    for i in range(v):
+        visited[i] = False
+        prev[i] = -1
+    recurDfs(s,deg,visited,prev,friends,0)
+    return friends,prev
+
+def recurDfs(s,deg,visited,prev,friends,dep):
+    if dep > deg:
+        return
+    visited[s] = True
+    if dep > 0:
+        friends.append(s)
+    for i in graph.get(s):
+        if not visited.get(i):
+            prev[i] = s
+            recurDfs(i,deg,visited,prev,friends,dep+1)
+
+print(dfs(1,2))
