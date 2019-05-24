@@ -163,3 +163,29 @@ cal8Queen(0)
 
 
 ##回溯算法：ip字符串找出所有合法的ip地址
+ip_str = "1921840187"
+ip_lst = list(ip_str) #str -> list
+fields = {} #key:0-3, value:str
+def search_Ip(ips,prev,dep):
+    if dep == 4:
+        tmp = [v for k,v in prev.items()]
+        if "".join(tmp) != ips:
+            return
+        else:
+            print(".".join(tmp))
+    cur = [v for k,v in prev.items() if k < dep]
+    cur_str = "".join(cur)
+    for i in range(len(cur_str)+1,len(ips)+1,1):
+        if verifyStr(ips[len(cur_str):i]):
+            prev[dep] = ips[len(cur_str):i]
+            search_Ip(ips,prev,dep+1)
+
+
+def verifyStr(i_str):
+    num = int(i_str)
+    if num >= 0 and num <= 255:
+        return True
+    else:
+        return False
+
+search_Ip(ip_str, fields, 0)
