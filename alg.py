@@ -189,3 +189,30 @@ def verifyStr(i_str):
         return False
 
 search_Ip(ip_str, fields, 0)
+
+
+##回溯算法：0-1背包问题，每个物品重量不同且价值也不同，在不超过背包重量的情况下，如何使得装进背包的物品总价值最大
+b_weight = 20 #背包重量
+item_w = {0:3,1:5,2:10,3:8,4:1,5:6} # key:物品 value:weight
+item_m = {0:6,1:20,2:5,3:7,4:3,5:4} # key:物品 value:money
+max_value = -1
+choose = {} #是否选择物品，物品:0/1，0是未选择，1是选择
+bag_value_choose = {}
+def bagpack(i, cw, cm, item_weight, item_money, bag_w, n):
+    if cw == bag_w or i == n:
+        global max_value
+        global bag_value_choose
+        if cm > max_value:
+            max_value = cm
+            bag_value_choose = {k:v for k,v in choose.items()}
+        return
+    choose[i] = 0
+    bagpack(i+1,cw,cm,item_weight,item_money,bag_w,n)
+    if (cw+item_weight[i]) <= bag_w:
+        choose[i] = 1
+        bagpack(i+1,cw+item_weight[i],cm+item_money[i],item_weight,item_money,bag_w,n)
+
+bagpack(0,0,0,item_w,item_m,b_weight,6)
+print(max_value,end="->")
+print(bag_value_choose)
+
