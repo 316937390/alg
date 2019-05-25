@@ -216,3 +216,27 @@ bagpack(0,0,0,item_w,item_m,b_weight,6)
 print(max_value,end="->")
 print(bag_value_choose)
 
+##动态规划：0-1背包问题，每个物品重量不同且价值也不同，在不超过背包重量的情况下，如何使得装进背包的物品总价值最大
+##动态规划的思路：把问题分为n个阶段，依次考察每个阶段的状态集合（去除重复的），由当前的状态集合推导下一个阶段的状态集合，动态地往前推进
+weight_values = {}  #key/value -> 重量/当前重量的最大价值
+def bag_dynamic_program(bag_w, n):
+    for i in range(bag_w+1):
+        weight_values[i] = -1
+    #初始化第一个物品
+    weight_values[0] = 0
+    weight_values[3] = 6
+    for i in range(1,n,1):  #依次考察其他的物品
+        j = bag_w - item_w[i]
+        while j >= 0:
+            if weight_values[j] >= 0:
+                v = weight_values[j] + item_m[i]
+                if v > weight_values[j+item_w[i]]:
+                    weight_values[j+item_w[i]] = v
+            j = j - 1
+
+    values = [v for k,v in weight_values.items()]
+    values.sort()
+    return values[len(values)-1]
+
+print(bag_dynamic_program(b_weight,6),end="->")
+print(weight_values)
