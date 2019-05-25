@@ -240,3 +240,46 @@ def bag_dynamic_program(bag_w, n):
 
 print(bag_dynamic_program(b_weight,6),end="->")
 print(weight_values)
+
+
+##动态规划：满足“一个模型三个特征”
+##“一个模型”：多阶段决策最优解模型
+##“三个特征”：最优子结构，无后效性，重复子问题
+##动态规划的一般思考过程：状态转移表法，状态转移方程法（递归加备忘录 或 迭代递推）
+##动态规划：杨辉三角，求从最高层到最底层的最短路径长度
+yh = [[5,8,4,1,5],[7,3,6,4],[2,9,9],[4,7],[2]]
+#初始化最短路径长度矩阵，即“备忘录”
+Mins = [[-1,-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1],[-1,-1],[-1]]
+def minDist(i,j):
+    if i == 0 and j == 0:
+        return yh[0][0]
+    if Mins[i][j] > 0:
+        return Mins[i][j]
+    # 只能向下或向右走，即i+1或j+1
+    up = False
+    up_min = -1
+    left = False
+    left_min = -1
+    if i - 1 >= 0 :
+        up = True
+        up_min = minDist(i-1,j)
+    if j - 1 >= 0:
+        left = True
+        left_min = minDist(i,j-1)
+    if up and left:
+        Mins[i][j] = yh[i][j] + min(up_min,left_min)
+        return yh[i][j] + min(up_min,left_min)
+    elif up == False and left == True:
+        Mins[i][j] = yh[i][j] + left_min
+        return yh[i][j] + left_min
+    elif up == True and left == False:
+        Mins[i][j] = yh[i][j] + up_min
+        return yh[i][j] + up_min
+
+print(minDist(4,0))
+print(minDist(3,1))
+print(minDist(2,2))
+print(minDist(1,3))
+print(minDist(0,4))
+
+
