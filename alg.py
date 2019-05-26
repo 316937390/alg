@@ -283,3 +283,35 @@ print(minDist(1,3))
 print(minDist(0,4))
 
 
+##硬币找零问题：回溯法
+##三种面值的硬币：1,3，5，需要支付9元，求最少需要多少个硬币？
+coin_values = [1,3,5]
+value_num = {}
+def coin_huisu(cv,num,total_value):
+    if cv == total_value:
+        if value_num.get(cv) == None:
+            value_num[cv] = num
+        else:
+            if num < value_num.get(cv):
+                value_num[cv] = num
+        return
+    for i in coin_values:
+        if cv + i <= total_value:
+            coin_huisu(cv+i,num+1,total_value)
+
+coin_huisu(0,0,9)
+print("回溯法：最少需要%d个硬币" % value_num.get(9))
+##硬币找零问题：动态规划
+##状态转移方程：f(9)=1+min(f(8),f(6),f(4))
+coins_value_steps = {1:1,3:1,5:1}
+def coin_dy(total_value):
+    if coins_value_steps.get(total_value) != None:
+        return coins_value_steps[total_value]
+    if total_value - 1 > 0 and total_value - 3 > 0 and total_value - 5 > 0:
+        return 1 + min(coin_dy(total_value-1),coin_dy(total_value-3),coin_dy(total_value-5))
+    elif total_value - 1 > 0 and total_value - 3 > 0:
+        return 1 + min(coin_dy(total_value - 1), coin_dy(total_value - 3))
+    elif total_value - 1 > 0:
+        return 1 + coin_dy(total_value - 1)
+print("动态规划：最少需要%d个硬币" % coin_dy(9))
+
