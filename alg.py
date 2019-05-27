@@ -315,3 +315,41 @@ def coin_dy(total_value):
         return 1 + coin_dy(total_value - 1)
 print("动态规划：最少需要%d个硬币" % coin_dy(9))
 
+
+##编辑距离（edit distance）：量化两个字符串之间的相似程度，将一个字符串转化成另一个字符串需要的最少编辑操作次数
+##莱文斯坦距离（差异程度）
+##最长公共子串长度（相似程度）
+##最长公共子串长度的回溯解法
+a = "mitcmu"
+b = "mtacnu"
+m = len(a)
+n = len(b)
+maxV = -1
+def lcs_huisu(i,j,mlen):
+    if i == m or j == n:
+        global maxV
+        if mlen > maxV:
+            maxV = mlen
+        return
+    if a[i] == b[j]:
+        lcs_huisu(i+1,j+1,mlen+1)
+    else:
+        lcs_huisu(i+1,j,mlen)
+        lcs_huisu(i,j+1,mlen)
+
+lcs_huisu(5,0,0)
+print("最长公共子串长度，回溯法：%d" % maxV)
+#最长公共子串长度的动态规划解法
+states_lcs = {0:{0:1}}
+def lcs_dp(i,j):
+    if i == 0 and j == 0:
+        return states_lcs[0][0]
+    if i < 0:
+        return -1
+    if j < 0:
+        return -1
+    if a[i] == b[j]:
+        return max(lcs_dp(i-1,j),lcs_dp(i,j-1),lcs_dp(i-1,j-1)+1)
+    else:
+        return max(lcs_dp(i-1,j),lcs_dp(i,j-1),lcs_dp(i-1,j-1))
+print("最长公共子串长度，动态规划法：%d" % lcs_dp(5,0))
