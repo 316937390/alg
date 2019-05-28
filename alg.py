@@ -426,3 +426,35 @@ def lvst_dp(i,j):
             states_lvst[i][j] = tmp
         return states_lvst[i][j]
 print("莱文斯坦距离，动态规划法：%d" % lvst_dp(5,0))
+
+
+##最长递增子序列
+input_arr = [2,9,3,6,5,1,7]
+states_las = {0:[2]}
+def las_dp(i):
+    if states_las.get(i) != None:
+        return states_las[i]
+    prev_arr = las_dp(i-1)
+    len_prev = len(prev_arr)
+    if input_arr[i] < prev_arr[len_prev-1] and input_arr[i] > prev_arr[len_prev-2]:
+        tmp_arr = [prev_arr[k] for k in range(len_prev-1)]
+        tmp_arr.append(input_arr[i])
+        states_las[i] = tmp_arr
+        return states_las[i]
+    elif input_arr[i] >= prev_arr[len_prev-1]:
+        tmp_arr = [prev_arr[k] for k in range(len_prev)]
+        tmp_arr.append(input_arr[i])
+        states_las[i] = tmp_arr
+        return states_las[i]
+    else:
+        tmp_arr = [prev_arr[k] for k in range(len_prev)]
+        states_las[i] = tmp_arr
+        return states_las[i]
+print("最长递增子序列，动态规划解法：",end="")
+print(las_dp(6))
+print(las_dp(5))
+print(las_dp(4))
+print(las_dp(3))
+print(las_dp(2))
+print(las_dp(1))
+print(las_dp(0))
