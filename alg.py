@@ -348,8 +348,81 @@ def lcs_dp(i,j):
         return -1
     if j < 0:
         return -1
+    if states_lcs.get(i) != None and states_lcs.get(i).get(j) != None:
+        return states_lcs[i][j]
     if a[i] == b[j]:
-        return max(lcs_dp(i-1,j),lcs_dp(i,j-1),lcs_dp(i-1,j-1)+1)
+        tmp = max(lcs_dp(i-1,j),lcs_dp(i,j-1),lcs_dp(i-1,j-1)+1)
+        if states_lcs.get(i) == None:
+            states_lcs[i] = {}
+            states_lcs[i][j] = tmp
+        elif states_lcs.get(i).get(j) == None:
+            states_lcs[i][j] = tmp
+        else:
+            states_lcs[i][j] = tmp
+        return states_lcs[i][j]
     else:
-        return max(lcs_dp(i-1,j),lcs_dp(i,j-1),lcs_dp(i-1,j-1))
+        tmp = max(lcs_dp(i-1,j),lcs_dp(i,j-1),lcs_dp(i-1,j-1))
+        if states_lcs.get(i) == None:
+            states_lcs[i] = {}
+            states_lcs[i][j] = tmp
+        elif states_lcs.get(i).get(j) == None:
+            states_lcs[i][j] = tmp
+        else:
+            states_lcs[i][j] = tmp
+        return states_lcs[i][j]
 print("最长公共子串长度，动态规划法：%d" % lcs_dp(5,0))
+
+##莱文斯坦距离的回溯解法
+minDist = None
+def lvst_huisu(i,j,dist):
+    if i == m or j == n:
+        global minDist
+        if i < m:
+            dist += (m-i)
+        if j < n:
+            dist += (n-j)
+        if minDist == None:
+            minDist = dist
+        elif dist < minDist:
+            minDist = dist
+        return
+    if a[i] == b[j]:
+        lvst_huisu(i+1,j+1,dist)
+    else:
+        lvst_huisu(i+1,j,dist+1)
+        lvst_huisu(i,j+1,dist+1)
+        lvst_huisu(i+1,j+1,dist+1)
+lvst_huisu(5,0,0)
+print("莱文斯坦距离，回溯法：%d" % minDist)
+##莱文斯坦距离的动态规划解法
+states_lvst = {0:{0:0}}
+def lvst_dp(i,j):
+    if i == 0 and j == 0:
+        return states_lvst[0][0]
+    if i < 0:
+        return m
+    if j < 0:
+        return n
+    if states_lvst.get(i) != None and states_lvst.get(i).get(j) != None:
+        return states_lvst[i][j]
+    if a[i] == b[j]:
+        tmp = min(lvst_dp(i-1,j)+1,lvst_dp(i,j-1)+1,lvst_dp(i-1,j-1))
+        if states_lvst.get(i) == None:
+            states_lvst[i] = {}
+            states_lvst[i][j] = tmp
+        elif states_lvst.get(i).get(j) == None:
+            states_lvst[i][j] = tmp
+        else:
+            states_lvst[i][j] = tmp
+        return states_lvst[i][j]
+    else:
+        tmp = min(lvst_dp(i-1,j)+1,lvst_dp(i,j-1)+1,lvst_dp(i-1,j-1)+1)
+        if states_lvst.get(i) == None:
+            states_lvst[i] = {}
+            states_lvst[i][j] = tmp
+        elif states_lvst.get(i).get(j) == None:
+            states_lvst[i][j] = tmp
+        else:
+            states_lvst[i][j] = tmp
+        return states_lvst[i][j]
+print("莱文斯坦距离，动态规划法：%d" % lvst_dp(5,0))
