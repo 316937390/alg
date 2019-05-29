@@ -29,4 +29,30 @@ def topoSort_Kahn():
 topoSort_Kahn()
 
 ##拓扑排序：有向无环图
-##DFS实现拓扑排序
+##DFS实现拓扑排序：首先构造逆邻接表，然后进行深度优先遍历
+inverse_graph = {0:[],1:[],2:[],3:[],4:[]}
+for k,v in graph.items():
+    for i in v:
+        inverse_graph[i].append(k)
+print("逆邻接表:",end="")
+print(inverse_graph)
+print("邻接表:",end="")
+print(graph)
+def dfs(v,visited,inverse):
+    for i in inverse[v]:
+        if visited[i]:
+            continue
+        visited[i] = True
+        dfs(i,visited,inverse)
+    print("->%d" % v,end="")
+
+def topoSort_DFS(num_vertex,inverse):
+    visited = {0:False,1:False,2:False,3:False,4:False}
+    for v in range(num_vertex):
+        if not visited[v]:
+            visited[v] = True
+            dfs(v,visited,inverse)
+    print("")
+
+topoSort_DFS(5,inverse_graph)
+
