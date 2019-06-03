@@ -85,3 +85,38 @@ def topoSort_BFS(n):
 
 topoSort_BFS(5)
 
+##最短路径算法：有向有权图
+##Dijkstra算法：借助优先级队列（小顶堆）
+class Vertex(object):
+    def __init__(self,id,distance):
+        self.id  = id  #顶点编号
+        self.distance = distance  #从起始顶点到该顶点的距离
+    def __cmp__(self, other):
+        if self.distance > other.distance:
+            return True
+        else:
+            return False
+"""
+pq = Queue.PriorityQueue()
+pq.put(Vertex(1,7))
+pq.put(Vertex(2,5))
+pq.put(Vertex(3,6))
+print(pq.qsize())
+print(pq.get().distance)
+print(pq.get().distance)
+print(pq.get().distance)
+"""
+
+
+##位图：布隆过滤器
+##布隆过滤器使用多个哈希函数，降低散列冲突概率，只会对存在的情况有误判
+
+
+##B+树：MySQL数据库索引
+
+
+
+##A*算法：一种启发式搜索算法，快速找到次优路径
+
+
+
