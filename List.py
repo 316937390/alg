@@ -46,8 +46,7 @@ class LinkedList(object):
         if prev != None:
             prev.next = node.next
         else:
-            self.head = None
-            self.tail = None
+            self.head = node.next
         self.length -= 1
 
     def append(self,node):
