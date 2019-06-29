@@ -109,14 +109,14 @@ def verify_round_string(input_str):
         lst.append(LNode(input_str[i]))
     lst.print()
     prev_node = None
-    tmp_slow = lst.head
+    tmp_slow = lst.head #链表中间结点
     tmp_fast = lst.head
     while tmp_fast and tmp_fast.next :
         prev_node = tmp_slow
         tmp_slow = tmp_slow.next
         tmp_fast = tmp_fast.next.next
     if tmp_fast == None:  ##even
-        lst.reverse(lst.head,prev_node)
+        lst.reverse(lst.head,prev_node) #反转
         while prev_node and tmp_slow :
             if prev_node.data == tmp_slow.data:
                 prev_node = prev_node.next
@@ -126,7 +126,7 @@ def verify_round_string(input_str):
                 break
     elif tmp_fast.next == None: ##odd
         tmp_slow = tmp_slow.next
-        lst.reverse(lst.head,prev_node)
+        lst.reverse(lst.head,prev_node) #反转
         while prev_node and tmp_slow :
             if prev_node.data == tmp_slow.data:
                 prev_node = prev_node.next
@@ -135,7 +135,86 @@ def verify_round_string(input_str):
                 print("不是回文串")
                 break
 
-##
+##两个有序链表合并
+def merge_sorted_list(lst_a, lst_b):
+    cur_a = lst_a.head
+    cur_b = lst_b.head
+    base = None #用于记录merge_list
+    if cur_a == None: #a为空
+        return lst_b
+    elif cur_b == None: #b为空
+        return lst_a
+    while cur_a and cur_b:
+        if cur_a.data <= cur_b.data:
+            if base == None:
+                base = cur_a
+                cur_a = cur_a.next
+            elif base.next == cur_a:
+                base = cur_a
+                cur_a = cur_a.next
+            elif base.next == cur_b:
+                next_a = cur_a.next
+                cur_a.next = cur_b
+                base.next = cur_a
+                cur_a = next_a
+                base = base.next
+        else:
+            if base == None:
+                base = cur_b
+                cur_b = cur_b.next
+            elif base.next == cur_a:
+                next_b = cur_b.next
+                cur_b.next = cur_a
+                base.next = cur_b
+                cur_b = next_b
+                base = base.next
+            elif base.next == cur_b:
+                base = cur_b
+                cur_b = cur_b.next
+    if cur_a == None:
+        if base.next == cur_a:
+            base.next = cur_b
+            return lst_a
+        elif base.next == cur_b:
+            return lst_b
+    elif cur_b == None:
+        if base.next == cur_b:
+            base.next = cur_a
+            return lst_b
+        elif base.next == cur_a:
+            return lst_a
+
+##测试两个有序链表合并
+print("测试两个有序链表合并")
+a = [1,3,5,7]
+b = [0,4,8,12]
+a = [1,4,8,15]
+b = [0,4,8,12]
+a = []
+b = [0,4,8,12]
+a = [1,2,2,2]
+b = [0,2,2,2]
+a_list = LinkedList()
+b_list = LinkedList()
+for i in a:
+    a_list.append(LNode(i))
+for j in b:
+    b_list.append(LNode(j))
+
+a_list.print()
+b_list.print()
+m_list = merge_sorted_list(a_list, b_list)
+m_list.print()
+
+##测试单链表反转
+
+##链表中环的检测
+
+##删除链表倒数第n个结点
+
+
+##测试判断回文串
+print("测试判断回文串")
 verify_round_string("a")
 verify_round_string("ab")
 verify_round_string("aa")
@@ -145,7 +224,8 @@ verify_round_string("abbaa")
 verify_round_string("abbba")
 verify_round_string("")
 
-##
+##测试LRU缓存淘汰算法的链表实现
+print("测试LRU缓存淘汰算法")
 cache = LRU_Cache(1)
 print(cache.find(23))
 cache.lst.print()
