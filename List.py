@@ -184,76 +184,78 @@ def merge_sorted_list(lst_a, lst_b):
         elif base.next == cur_a:
             return lst_a
 
-##测试两个有序链表合并
-print("测试两个有序链表合并")
-a = [1,3,5,7]
-b = [0,4,8,12]
-a = [1,4,8,15]
-b = [0,4,8,12]
-a = []
-b = [0,4,8,12]
-a = [1,2,2,2]
-b = [0,2,2,2]
-a_list = LinkedList()
-b_list = LinkedList()
-for i in a:
-    a_list.append(LNode(i))
-for j in b:
-    b_list.append(LNode(j))
 
-a_list.print()
-b_list.print()
-m_list = merge_sorted_list(a_list, b_list)
-m_list.print()
+if __name__ == "__main__":
+    ##测试两个有序链表合并
+    print("测试两个有序链表合并")
+    a = [1,3,5,7]
+    b = [0,4,8,12]
+    a = [1,4,8,15]
+    b = [0,4,8,12]
+    a = []
+    b = [0,4,8,12]
+    a = [0,2,2,2]
+    b = [1,2,2,2]
+    a_list = LinkedList()
+    b_list = LinkedList()
+    for i in a:
+        a_list.append(LNode(i))
+    for j in b:
+        b_list.append(LNode(j))
 
-##测试单链表反转
+    a_list.print()
+    b_list.print()
+    m_list = merge_sorted_list(a_list, b_list)
+    m_list.print()
 
-##链表中环的检测
+    ##测试单链表反转
 
-##删除链表倒数第n个结点
+    ##链表中环的检测
+
+    ##删除链表倒数第n个结点
 
 
-##测试判断回文串
-print("测试判断回文串")
-verify_round_string("a")
-verify_round_string("ab")
-verify_round_string("aa")
-verify_round_string("abaa")
-verify_round_string("abba")
-verify_round_string("abbaa")
-verify_round_string("abbba")
-verify_round_string("")
+    ##测试判断回文串
+    print("测试判断回文串")
+    verify_round_string("a")
+    verify_round_string("ab")
+    verify_round_string("aa")
+    verify_round_string("abaa")
+    verify_round_string("abba")
+    verify_round_string("abbaa")
+    verify_round_string("abbba")
+    verify_round_string("")
 
-##测试LRU缓存淘汰算法的链表实现
-print("测试LRU缓存淘汰算法")
-cache = LRU_Cache(1)
-print(cache.find(23))
-cache.lst.print()
-print(cache.find(21))
-cache.lst.print()
-print(cache.find(25))
-cache.lst.print()
+    ##测试LRU缓存淘汰算法的链表实现
+    print("测试LRU缓存淘汰算法")
+    cache = LRU_Cache(1)
+    print(cache.find(23))
+    cache.lst.print()
+    print(cache.find(21))
+    cache.lst.print()
+    print(cache.find(25))
+    cache.lst.print()
 
-cache = LRU_Cache(2)
-print(cache.find(23))
-cache.lst.print()
-print(cache.find(21))
-cache.lst.print()
-print(cache.find(23))
-cache.lst.print()
-print(cache.find(25))
-cache.lst.print()
-print(cache.find(25))
-cache.lst.print()
-print(cache.find(26))
-cache.lst.print()
-print(cache.find(25))
-cache.lst.print()
+    cache = LRU_Cache(2)
+    print(cache.find(23))
+    cache.lst.print()
+    print(cache.find(21))
+    cache.lst.print()
+    print(cache.find(23))
+    cache.lst.print()
+    print(cache.find(25))
+    cache.lst.print()
+    print(cache.find(25))
+    cache.lst.print()
+    print(cache.find(26))
+    cache.lst.print()
+    print(cache.find(25))
+    cache.lst.print()
 
-cache = LRU_Cache(10)
-for i in range(20):
-    print(cache.find(i))
-cache.lst.print()
-for i in range(10):
-    print(cache.find(i))
-cache.lst.print()
+    cache = LRU_Cache(10)
+    for i in range(20):
+        print(cache.find(i))
+    cache.lst.print()
+    for i in range(10):
+        print(cache.find(i))
+    cache.lst.print()
