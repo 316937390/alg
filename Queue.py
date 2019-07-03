@@ -26,7 +26,30 @@ class LQueue(object):
     def enqueue(self, data):
         self.lst.append(LNode(data))
 
+##循环队列
+class CircularQueue(object):
+    def __init__(self,capacity):
+        self.array = [None]*capacity
+        self.n = capacity
+        self.head = 0
+        self.tail = 0
 
+    def dequeue(self):
+        if self.head == self.tail:
+            return None
+        else:
+            tmp = self.array[self.head]
+            self.head = (self.head+1)%self.n
+            return tmp
+
+    def enqueue(self,data):
+        if (self.tail+1)%self.n == self.head:
+            return False
+        else:
+            self.array[self.tail] = data
+            self.tail = (self.tail+1)%self.n
+            return True
+    
 
 
 
@@ -44,3 +67,15 @@ if __name__ == "__main__":
     for i in range(10):
         que.enqueue(i)
     que.lst.print()
+    ##测试循环队列
+    cque = CircularQueue(5)
+    print(cque.dequeue())
+    for i in range(5):
+        cque.enqueue(i)
+    for i in range(5):
+        print(cque.dequeue())
+    for i in range(2,20,2):
+        cque.enqueue(i)
+    for i in range(5):
+        print(cque.dequeue())
+    print(cque.array)
