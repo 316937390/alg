@@ -17,6 +17,10 @@ from __future__ import print_function
 1.冒泡排序：冒泡排序只会操作相邻的两个数据，一次冒泡会让至少一个元素移动到它应该在的位置，重复n次，就完成了n个数据的排序工作。
 2.插入排序：取未排序区间中的元素，在已排序区间中找到合适的位置将其插入，并保证已排序区间数据一直有序，重复这个过程，直到未排序区间中元素为空，排序结束。
 3.选择排序：每次会从未排序区间中找到最小的元素，将其放到已排序区间的末尾。
+
+冒泡排序 vs 插入排序：两者虽然在时间复杂度上一样，但是如果希望性能优化，则首选插入排序，插入排序也可以继续优化，比如：希尔排序
+
+希尔排序：也称递减增量排序算法，是插入排序的一种更高效的改进版本。希尔排序是不稳定的，最重要的是步长的选择，只要最终步长为1任何步长序列都可以工作。
 """
 
 ##
@@ -63,6 +67,22 @@ def select_sort(array_input):
             array_input[idx] = tmp
 
 
+##
+def shell_sort(array_input):
+    n = len(array_input)
+    gap = (n >> 1)
+    while gap > 0:
+        for i in range(gap,n):
+            value = array_input[i]
+            j = i
+            while j >= gap and value < array_input[j-gap]:
+                array_input[j] = array_input[j-gap]
+                j -= gap
+            array_input[j] = value
+        gap = (gap >> 1)
+
+
+
 if __name__ == "__main__":
     ##测试冒泡排序
     arr_1 = [4,5,3,1,8,8,2]
@@ -76,3 +96,7 @@ if __name__ == "__main__":
     arr_3 = [5,8,5,3,2,7,6]
     select_sort(arr_3)
     print(arr_3)
+    ##测试希尔排序
+    arr_4 = [13,14,94,33,82,25,59,94,65,23,45,27,73,25,39,10]
+    shell_sort(arr_4)
+    print(arr_4)
