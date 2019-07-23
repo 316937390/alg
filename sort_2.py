@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
+from Stack import LStack
 
 """
 归并排序：使用分治思想，先把数组从中间分成前后两部分，然后对前后两部分分别排序，再将排好序的两部分合并在一起，这样整个数组就都有序了。
@@ -73,6 +74,31 @@ def partition(arr,p,r):
     arr[r] = tmp
     return i
 
+##快速排序的非递归实现
+def qsort(arr,n):
+    if n == 1:
+        return
+    stack = LStack()
+    p = 0
+    r = n-1
+    stack.push(r)
+    stack.push(p)
+    while stack.top() != None:
+        p = stack.pop().data
+        r = stack.pop().data
+        q = partition(arr,p,r)
+        if p >= (q-1) and (q+1) < r:
+            stack.push(r)
+            stack.push(q+1)
+        if (q+1) >= r and p < (q-1):
+            stack.push(q-1)
+            stack.push(p)
+        if p < (q-1) and (q+1) < r:
+            stack.push(r)
+            stack.push(q+1)
+            stack.push(q-1)
+            stack.push(p)
+
 
 if __name__ == "__main__":
     ##测试归并排序
@@ -83,3 +109,7 @@ if __name__ == "__main__":
     arr_2 = [13,14,94,33,82,25,59,94,65,23,45,27,73,25,39,10]
     quick_sort(arr_2, len(arr_2))
     print(arr_2)
+    ##测试qsort
+    arr_3 = [10,2,6,33,82,25,59,94,65,23,45,27,73,25,39,10]
+    qsort(arr_3,len(arr_3))
+    print(arr_3)
