@@ -99,6 +99,19 @@ def qsort(arr,n):
             stack.push(q-1)
             stack.push(p)
 
+##求无序数组中的第K大元素，要求时间复杂度是O(n)
+def k_th_arr(arr,k,n):
+    return k_th_arr_c(arr,k,0,n-1)
+
+def k_th_arr_c(arr,k,p,r):
+    q = partition(arr,p,r)
+    if k == (q+1):
+        return arr[q]
+    elif k < (q+1):
+        return k_th_arr_c(arr,k,p,q-1)
+    elif k > (q+1):
+        return k_th_arr_c(arr,k,q+1,r)
+
 
 if __name__ == "__main__":
     ##测试归并排序
@@ -113,3 +126,8 @@ if __name__ == "__main__":
     arr_3 = [10,2,6,33,82,25,59,94,65,23,45,27,73,25,39,10]
     qsort(arr_3,len(arr_3))
     print(arr_3)
+    ##
+    k = 10
+    arr_4 = [13,14,94,33,82,25,59,94,65,23,45,27,73,25,39,10]
+    th = k_th_arr(arr_4,k,len(arr_4))
+    print("%dth : %d" % (k,th))
