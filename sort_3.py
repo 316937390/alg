@@ -16,6 +16,64 @@ from __future__ import print_function
 """
 
 ##
+def countingSort(arr, n):
+    if n <= 1:
+        return
+    ##查找数据范围，假设都是非负整数
+    max_v = arr[0]
+    for i in range(n):
+        if arr[i] > max_v:
+            max_v = arr[i]
+    ##申请一个计数数组
+    cnt = [0]*(max_v+1)
+    for i in range(n):
+        cnt[arr[i]] += 1
+    ##依次累加
+    for i in range(1,len(cnt)):
+        cnt[i] = cnt[i-1] + cnt[i]
+    ##临时数组，存储排序后的结果
+    tmp = [None]*n
+    ##计数排序的关键步骤
+    for i in range(n):
+        index = cnt[arr[n-1-i]] - 1
+        tmp[index] = arr[n-1-i]
+        cnt[arr[n-1-i]] -= 1
+    ##将结果拷贝
+    for i in range(n):
+        arr[i] = tmp[i]
+
+##
+def radixSort(arr,n,digit):
+    if n <= 1:
+        return
+    for i in range(digit):
+        radixSort_c(arr,n,digit-1-i)
+
+
+def radixSort_c(arr,n,radix):
+    max_v = int(arr[0][radix])
+    for i in range(n):
+        if int(arr[i][radix]) > max_v:
+            max_v = int(arr[i][radix])
+    cnt = [0]*(max_v+1)
+    for i in range(n):
+        cnt[int(arr[i][radix])] += 1
+    for i in range(1,len(cnt)):
+        cnt[i] = cnt[i-1] + cnt[i]
+    tmp = [None]*n
+    for i in range(n):
+        index = cnt[int(arr[n-1-i][radix])] - 1
+        tmp[index] = arr[n-1-i]
+        cnt[int(arr[n-1-i][radix])] -= 1
+    for i in range(n):
+        arr[i] = tmp[i]
 
 if __name__ == "__main__":
-    pass
+    ##测试计数排序
+    arr_1 = [2,5,3,0,2,3,0,3]
+    countingSort(arr_1, len(arr_1))
+    print(arr_1)
+    ##测试基数排序，手机号码排序
+    arr_2 = ["13601090646","13121045042","13671131521","13718301518"]
+    radixSort(arr_2,len(arr_2),11)
+    print(arr_2)
