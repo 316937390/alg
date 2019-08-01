@@ -39,6 +39,34 @@ def b_search(arr, low, high, value):
     elif arr[mid] < value:
         return b_search(arr,mid+1,high,value)
 
+
+
+##
+def sqrt_b(v,precise):
+    assert v>=0
+    low = None
+    high = None
+    if v == 1:
+        return 1
+    if v == 0:
+        return 0
+    if v > 0  and  v < 1 :
+        low = v
+        high = 1
+    elif v > 1 :
+        low = 1
+        high = v
+    while low<=high:
+        mid = low + ((high-low)/2)
+        if (mid-precise)**2 < v and (mid+precise)**2 > v:
+            return mid
+        elif mid**2 > v:
+            high = mid
+        elif mid**2 < v:
+            low = mid
+
+
+
 if __name__ == "__main__":
     ##测试非递归的二分查找
     arr_1 = [10]
@@ -50,3 +78,7 @@ if __name__ == "__main__":
     print(b_search(arr_3,0,len(arr_3)-1,10))
     arr_4 = [8,11,19,23,27,33,45,55,67,98]
     print(b_search(arr_4,0,len(arr_4)-1,55))
+    ##测试sqrt_b
+    print(sqrt_b(5.0,0.0001))
+    print(sqrt_b(1.0,0.0001))
+    print(sqrt_b(0.0,0.0001))
