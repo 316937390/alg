@@ -11,6 +11,12 @@ from __future__ import print_function
 2、二分查找针对的是有序数据：只能用在插入、删除操作不频繁，一次排序多次查找的场景中；针对动态变化的数据集合，二分查找将不再适用
 3、数据量太小不适合二分查找：特例是如果数据之间的比较操作非常耗时，不管数据量大小，都推荐使用二分查找，因为可以有效减少比较次数
 4、数据量太大也不适合二分查找
+
+二分查找的变形问题：
+1、查找第一个值等于给定值的元素
+2、查找最后一个值等于给定值的元素
+3、查找第一个大于等于给定值的元素
+4、查找最后一个小于等于给定值的元素
 """
 
 ##非递归实现二分查找
@@ -66,6 +72,42 @@ def sqrt_b(v,precise):
             low = mid
 
 
+##查找第一个值等于给定值的元素
+def bs_first_eq(arr,n,value):
+    low = 0
+    high = n-1
+    while low<=high:
+        mid = low + ((high-low)>>1)
+        if arr[mid] == value and (mid == 0 or arr[mid-1] < value):
+            return mid
+        elif arr[mid] == value and arr[mid-1] == value:
+            high = mid-1
+        elif arr[mid] < value:
+            low = mid+1
+        elif arr[mid] > value:
+            high = mid-1
+    return -1
+
+##查找最后一个值等于给定值的元素
+def bs_last_eq(arr,n,value):
+    low = 0
+    high = n-1
+    while low<=high:
+        mid = low + ((high-low)>>1)
+        if arr[mid] == value and (mid == (n-1) or arr[mid+1] > value):
+            return mid
+        elif arr[mid] == value and arr[mid+1] == value:
+            low = mid+1
+        elif arr[mid] < value:
+            low = mid+1
+        elif arr[mid] > value:
+            high = mid-1
+    return -1
+
+##查找第一个大于等于给定值的元素
+def bs_first_ge(arr,n,value):
+
+
 
 if __name__ == "__main__":
     ##测试非递归的二分查找
@@ -79,6 +121,16 @@ if __name__ == "__main__":
     arr_4 = [8,11,19,23,27,33,45,55,67,98]
     print(b_search(arr_4,0,len(arr_4)-1,55))
     ##测试sqrt_b
-    print(sqrt_b(5.0,0.0001))
-    print(sqrt_b(1.0,0.0001))
-    print(sqrt_b(0.0,0.0001))
+    print("sqrt:",sqrt_b(5.0,0.0001))
+    print("sqrt:",sqrt_b(1.0,0.0001))
+    print("sqrt:",sqrt_b(0.0,0.0001))
+    ##
+    arr_5 = [0,1,2,4,4,4,5,7,9,10]
+    print("idx:",bs_first_eq(arr_5,len(arr_5),4))
+    print("idx:",bs_first_eq(arr_5,len(arr_5),7))
+    arr_6 = [0,0,0,1,2,4,4,4,5,7,9,10]
+    print("idx:",bs_first_eq(arr_6,len(arr_6),0))
+    arr_7 = [0,0,0,1,2,4,4,4,5,7,9,10]
+    print("idx:",bs_last_eq(arr_7,len(arr_7),0))
+    print("idx:",bs_last_eq(arr_7,len(arr_7),10))
+
