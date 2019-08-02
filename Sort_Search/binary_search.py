@@ -106,6 +106,33 @@ def bs_last_eq(arr,n,value):
 
 ##查找第一个大于等于给定值的元素
 def bs_first_ge(arr,n,value):
+    low = 0
+    high = n-1
+    while low<=high:
+        mid = low + ((high-low)>>1)
+        if arr[mid] >= value and (mid == 0 or arr[mid-1] < value):
+            return mid
+        elif arr[mid] >= value and arr[mid-1] >= value:
+            high = mid-1
+        elif arr[mid] < value:
+            low = mid+1
+    return -1
+
+
+##查找最后一个小于等于给定值的元素
+def bs_last_le(arr,n,value):
+    low = 0
+    high = n-1
+    while low<=high:
+        mid = low + ((high-low)>>1)
+        if arr[mid] <= value and (mid == (n-1) or arr[mid+1] > value):
+            return mid
+        elif arr[mid] <= value and arr[mid+1] <= value:
+            low = mid+1
+        elif arr[mid] > value:
+            high = mid-1
+    return -1
+
 
 
 
@@ -124,13 +151,20 @@ if __name__ == "__main__":
     print("sqrt:",sqrt_b(5.0,0.0001))
     print("sqrt:",sqrt_b(1.0,0.0001))
     print("sqrt:",sqrt_b(0.0,0.0001))
-    ##
+    ##测试二分查找的变形问题
     arr_5 = [0,1,2,4,4,4,5,7,9,10]
     print("idx:",bs_first_eq(arr_5,len(arr_5),4))
-    print("idx:",bs_first_eq(arr_5,len(arr_5),7))
-    arr_6 = [0,0,0,1,2,4,4,4,5,7,9,10]
-    print("idx:",bs_first_eq(arr_6,len(arr_6),0))
+    print("idx:",bs_first_eq(arr_5,len(arr_5),10))
+    print("idx:",bs_first_eq(arr_5,len(arr_5),0))
     arr_7 = [0,0,0,1,2,4,4,4,5,7,9,10]
     print("idx:",bs_last_eq(arr_7,len(arr_7),0))
+    print("idx:",bs_last_eq(arr_7,len(arr_7),4))
     print("idx:",bs_last_eq(arr_7,len(arr_7),10))
-
+    arr_8 = [0,1,2,3,4,4,4,7,8,9]
+    print("idx:",bs_first_ge(arr_8,len(arr_8),0))
+    print("idx:",bs_first_ge(arr_8,len(arr_8),4))
+    print("idx:",bs_first_ge(arr_8,len(arr_8),9))
+    arr_9 = [0,1,2,3,4,4,5,7,8,9]
+    print("idx:",bs_last_le(arr_9,len(arr_9),6))
+    print("idx:",bs_last_le(arr_9,len(arr_9),0))
+    print("idx:",bs_last_le(arr_9,len(arr_9),9))
