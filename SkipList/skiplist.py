@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
+import random
 
 """
 跳表：一种动态数据结构，可以支持快速的插入、删除、查找操作。Redis中的有序集合（Sorted Set）就是用跳表实现的。
@@ -19,6 +20,134 @@ from __future__ import print_function
 注：跳表比较适合按照区间查找数据的操作
 """
 
+##跳表的一种实现方法：跳表中存储的是正整数，并且存储的是不重复的
+MAX_LEVEL = 5
+class Node(object):
+    def __init__(self):
+        self.data = -1
+        self.forwards = [None] * MAX_LEVEL
+        self.maxLevel = 0
+
+
+class SkipList(object):
+    def __init__(self):
+        self.head = Node()
+        self.levelCount = 1
+
+    def randomLevel(self):
+        level = 1
+        for i in range(1,MAX_LEVEL,1):
+            if random.randint(0,100) % 2 == 1:
+                level += 1
+        return level
+
+    def find(self,value):
+        p = self.head
+        for i in range(self.levelCount):
+            while p.forwards[self.levelCount-1-i] != None and p.forwards[self.levelCount-1-i].data < value:
+                p = p.forwards[self.levelCount-1-i]
+        if p.forwards[0] != None and p.forwards[0].data == value:
+            return p.forwards[0]
+        else:
+            return None
+
+    def find_last_less(self,value):
+        p = self.head
+        for i in range(self.levelCount):
+            while p.forwards[self.levelCount-1-i] != None and p.forwards[self.levelCount-1-i].data < value:
+                p = p.forwards[self.levelCount-1-i]
+        if p != self.head:
+            return p
+        else:
+            return None
+
+    def insert(self,value):
+        level = self.randomLevel()
+        newNode = Node()
+        newNode.data = value
+        newNode.maxLevel = level
+        update = [Node()]*level
+        for i in range(level):
+            update[i] = self.head
+        #record every level largest value which smaller than insert value in update[]
+        p = self.head
+        for i in range(level):
+            while p.forwards[level-1-i] != None and p.forwards[level-1-i].data < value:
+                p = p.forwards[level-1-i]
+            #use update save node in search path
+            update[level-1-i] = p
+
+        #in search path node next node become new node forwords(next)
+        for i in range(level):
+            newNode.forwards[i] = update[i].forwards[i]
+            update[i].forwards[i] = newNode
+
+        #update node hight
+        if self.levelCount < level:
+            self.levelCount = level
+
+
+    def delete(self,value):
+        update = [Node()]*self.levelCount
+        p = self.head
+        for i in range(self.levelCount):
+            while p.forwards[self.levelCount-1-i] != None and p.forwards[self.levelCount-1-i].data < value:
+                p = p.forwards[self.levelCount-1-i]
+            update[self.levelCount-1-i] = p
+        if p.forwards[0] != None and p.forwards[0].data == value:
+            for i in range(self.levelCount):
+                if update[self.levelCount-1-i].forwards[self.levelCount-1-i] != None and update[self.levelCount-1-i].forwards[self.levelCount-1-i].data == value:
+                    update[self.levelCount-1-i].forwards[self.levelCount-1-i] = update[self.levelCount-1-i].forwards[self.levelCount-1-i].forwards[self.levelCount-1-i]
+
+    def printAll(self):
+        p = self.head
+        lst = []
+        while p.forwards[0] != None:
+            lst.append(str(p.forwards[0].data))
+            p = p.forwards[0]
+        print("->".join(lst))
+
 
 if __name__ == "__main__":
-    pass
+    #测试跳表
+    skiplist = SkipList()
+    ##插入
+    skiplist.insert(10)
+    skiplist.insert(9)
+    skiplist.insert(1)
+    skiplist.insert(4)
+    skiplist.printAll()
+    ##删除
+    skiplist.delete(9)
+    skiplist.delete(30)
+    skiplist.delete(1)
+    skiplist.delete(10)
+    skiplist.delete(4)
+    skiplist.printAll()
+    ##查找
+    for i in range(0,1000,2):
+        skiplist.insert(i)
+    for i in range(100,200,1):
+        ret = skiplist.find(i)
+        if ret != None:
+            print("    find: ",ret.data)
+        else:
+            print("not find: ",i)
+    #区间查找
+    p = skiplist.find_last_less(789)
+    while p != None:
+        if p.forwards[0] != None and p.forwards[0].data < 800:
+            print(p.forwards[0].data,end=",")
+        p = p.forwards[0]
+    p = skiplist.find_last_less(2000)
+    while p != None:
+        if p.forwards[0] != None and p.forwards[0].data < 2800:
+            print(p.forwards[0].data,end=",")
+        p = p.forwards[0]
+    skiplist = SkipList()
+    p = skiplist.find_last_less(5)
+    while p != None:
+        if p.forwards[0] != None and p.forwards[0].data < 10:
+            print(p.forwards[0].data,end=",")
+        p = p.forwards[0]
+
