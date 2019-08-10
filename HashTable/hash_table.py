@@ -39,7 +39,29 @@ Java LinkedHashMap:通过双向链表和散列表这两种数据结构组合实�
 
 """
 
-##
+##散列表+双向链表
+class HashNode(object):
+    def __init__(self,data):
+        self.prev = None
+        self.next = None
+        self.hnext = None
+        self.data = data
+
+class AHashTable(object):
+    def __init__(self,cap):
+        self.capacity = cap
+        self.head = None
+        self.tail = None
+        self.data = [None]*cap
+
+    def find(self,value):
+        pass
+
+    def insert(self,value):
+        pass
+
+    def delete(self,value):
+        pass
 
 
 if __name__ == "__main__":
