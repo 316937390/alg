@@ -52,7 +52,7 @@ class AHashTable(object):
         self.capacity = cap
         self.head = None
         self.tail = None
-        self.data = [None]*cap
+        self.data = [HashNode(None)]*cap
 
     def find(self,value):
         pass
