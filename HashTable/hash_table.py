@@ -41,28 +41,145 @@ Java LinkedHashMap:通过双向链表和散列表这两种数据结构组合实�
 
 ##散列表+双向链表
 class HashNode(object):
-    def __init__(self,data):
+    def __init__(self,key=None,value=None):
         self.prev = None
         self.next = None
         self.hnext = None
-        self.data = data
+        self.data = [key,value]
 
 class AHashTable(object):
-    def __init__(self,cap):
+    def __init__(self,cap=16):
         self.capacity = cap
         self.head = None
         self.tail = None
-        self.data = [HashNode(None)]*cap
+        self.data = [HashNode()]*cap
+        self.number = 0
 
-    def find(self,value):
-        pass
+    def find(self,key):
+        hashcode = self.__hashCode(key)
+        slot = self.data[hashcode]
+        while slot != None:
+            if slot.data[0] == key:
+                break
+            slot = slot.hnext
+        if slot == None:
+            return None
+        #找到key，放到链表尾部
+        if self.tail == slot:
+            return self.tail
+        else:
+            if slot.prev != None:
+                slot.prev.next = slot.next
+            else:
+                self.head = slot.next
+            slot.next.prev = slot.prev
+            self.tail.next = slot
+            slot.next = None
+            slot.prev = self.tail
+            self.tail = slot
+            return self.tail
 
-    def insert(self,value):
-        pass
+    #func: insert
+    #return:  0    直接插入
+    #         1    删除后插入
+    #         2    更新
+    def insert(self,key,value):
+        hashcode = self.__hashCode(key)
+        slot = self.data[hashcode]
+        h_pre = None
+        while slot != None:
+            if slot.data[0] == key:
+                break
+            h_pre = slot
+            slot = slot.hnext
+        if slot == None:
+            node = HashNode(key, value)
+            h_pre.hnext = node
+            if self.number >= self.capacity:
+                if self.head == self.tail:
+                    self.head = node
+                    self.tail = node
+                else:
+                    self.head.next.prev = None
+                    self.head = self.head.next
+                    self.tail.next = node
+                    node.next = None
+                    node.prev = self.tail
+                    self.tail = node
+                return 1
+            else:
+                if self.number != 0:
+                    self.tail.next = node
+                    node.next = None
+                    node.prev = self.tail
+                    self.tail = node
+                else:
+                    self.head = node
+                    self.tail = node
+                self.number += 1
+                return 0
+        else:
+            slot.data[1] = value
+            if self.tail == slot:
+                return 2
+            else:
+                if slot.prev != None:
+                    slot.prev.next = slot.next
+                else:
+                    self.head = slot.next
+                slot.next.prev = slot.prev
+                self.tail.next = slot
+                slot.next = None
+                slot.prev = self.tail
+                self.tail = slot
+                return 2
 
-    def delete(self,value):
-        pass
+    #func: delete
+    #return:  -1   无法找到key
+    #         0    成功删除
+    def delete(self,key):
+        hashcode = self.__hashCode(key)
+        slot = self.data[hashcode]
+        h_pre = None
+        while slot != None:
+            if slot.data[0] == key:
+                break
+            h_pre = slot
+            slot = slot.hnext
+        if slot == None:
+            return -1
+        h_pre.hnext = slot.hnext
+        if self.head == slot:
+            self.head = slot.next
+        if self.tail == slot:
+            self.tail = slot.prev
+        if slot.prev != None:
+            slot.prev.next = slot.next
+        if slot.next != None:
+            slot.next.prev = slot.prev
+        self.number -= 1
+        return 0
 
+    def __hashCode(self,key):
+        return int(key) % self.capacity
+
+    def printAll(self):
+        p = self.head
+        while p:
+            print(p.data,end="->")
+            p = p.next
+        print("END")
 
 if __name__ == "__main__":
-    pass
+    #测试散列表+双向链表
+    ht = AHashTable()
+    for i in range(20):
+        ht.insert(i,i**2)
+    ht.printAll()
+    for i in range(10,20,2):
+        ht.delete(i)
+    ht.printAll()
+    for i in range(20):
+        print(i,ht.find(i))
+        ht.printAll()
+
