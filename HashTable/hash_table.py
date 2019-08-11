@@ -178,8 +178,22 @@ if __name__ == "__main__":
     ht.printAll()
     for i in range(10,20,2):
         ht.delete(i)
+    ht.delete(100)
     ht.printAll()
     for i in range(20):
         print(i,ht.find(i))
         ht.printAll()
+    for i in range(20):
+        print(20-1-i,ht.find(20-1-i))
+        ht.printAll()
+    print(ht.number)
+    for i in range(20):
+        ht.insert(i,i+1)
+    ht.printAll()
+    print(ht.number)
+    for i in range(30,40):
+        ht.insert(i,i)
+    ht.printAll()
+    print(ht.number)
+
 
