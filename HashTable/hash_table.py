@@ -96,6 +96,7 @@ class AHashTable(object):
             node = HashNode(key, value)
             h_pre.hnext = node
             if self.number >= self.capacity:
+                self.__deleteHead()
                 if self.head == self.tail:
                     self.head = node
                     self.tail = node
@@ -162,6 +163,18 @@ class AHashTable(object):
 
     def __hashCode(self,key):
         return int(key) % self.capacity
+
+    def __deleteHead(self):
+        assert self.head != None
+        hashcode = self.__hashCode(self.head.data[0])
+        head_slot = self.data[hashcode]
+        prev_head = None
+        while head_slot:
+            if head_slot == self.head:
+                break
+            prev_head = head_slot
+            head_slot = head_slot.hnext
+        prev_head.hnext = head_slot.hnext
 
     def printAll(self):
         p = self.head
