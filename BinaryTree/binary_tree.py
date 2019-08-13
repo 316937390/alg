@@ -28,7 +28,31 @@ inOrder(r) = inOrder(r->left)->print r->inOrder(r->right)
 后序遍历的递推公式：
 postOrder(r) = postOrder(r->left)->postOrder(r->right)->print r
 
+二叉查找树(Binary Search Tree)：支持动态数据集合的快速插入、删除、查找操作
+二叉查找树要求，在树中的任意一个节点，其左子树的每个节点的值都要小于这个节点的值，而其右子树的每个节点的值都大于这个节点的值。
+
 """
+class TreeNode(object):
+    def __init__(self,value=None):
+        self.data = value
+        self.left = None
+        self.right = None
+
+class BST(object):
+    def __init__(self,value):
+        self.root = TreeNode(value)
+
+    def inOrder(self):
+        self.__in_order(self.root)
+
+    def __in_order(self,node):
+        if node == None:
+            return
+        self.__in_order(node.left)
+        print(node.data,end=",")
+        self.__in_order(node.right)
+
+
 
 
 
