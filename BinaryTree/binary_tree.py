@@ -39,11 +39,12 @@ class TreeNode(object):
         self.right = None
 
 class BST(object):
-    def __init__(self,value):
-        self.root = TreeNode(value)
+    def __init__(self):
+        self.root = None
 
     def inOrder(self):
         self.__in_order(self.root)
+        print("END")
 
     def __in_order(self,node):
         if node == None:
@@ -52,9 +53,92 @@ class BST(object):
         print(node.data,end=",")
         self.__in_order(node.right)
 
+    def find(self,value):
+        p = self.root
+        while p:
+            if value < p.data:
+                p = p.left
+            elif value > p.data:
+                p = p.right
+            else:
+                return p
+        return None
+
+    def insert(self,value):
+        p = self.root
+        if p == None:
+            self.root = TreeNode(value)
+            return self.root
+        prev = None
+        while p:
+            prev = p
+            if value <= p.data:
+                p = p.left
+            else:
+                p = p.right
+        if value <= prev.data:
+            prev.left = TreeNode(value)
+            return prev.left
+        else:
+            prev.right = TreeNode(value)
+            return prev.right
+
+    def delete(self,value):
+        p = self.root
+        pp = None
+        while p and p.data != value:
+            pp = p
+            if value < p.data:
+                p = p.left
+            elif value > p.data:
+                p = p.right
+        if p == None:  ##没有找到
+            return -1
+        ##要删除的节点有两个子节点
+        if p.left != None and p.right != None:
+            minP = p.right
+            minPP = p
+            while minP.left:
+                minPP = minP
+                minP = minP.left
+            p.data = minP.data
+            p = minP
+            pp = minPP
+        #删除节点是叶子节点或者仅有一个子节点
+        child = None
+        if p.left != None:
+            child = p.left
+        elif p.right != None:
+            child = p.right
+        else:
+            child = None
+
+        if pp == None:
+            self.root = child
+        elif pp.left == p:
+            pp.left = child
+        elif pp.right == p:
+            pp.right = child
+
+        return 0
 
 
 
 
 if __name__ == "__main__":
-    pass
+    ##测试二叉查找树
+    bst = BST()
+    arr = [5,3,1,4,8,6,10]
+    for i in arr:
+        bst.insert(i)
+    bst.inOrder()
+    print(bst.find(5).data)
+    print(bst.find(3).data)
+    print(bst.find(10).data)
+    print(bst.find(20))
+    print(bst.delete(10))
+    print(bst.delete(8))
+    print(bst.delete(5))
+    print(bst.delete(20))
+    bst.inOrder()
+
