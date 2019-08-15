@@ -197,6 +197,15 @@ class BST(object):
         return 0
 
 
+def getHeight(tree):
+    if tree == None:
+        return 0
+    left_h = getHeight(tree.left)
+    right_h = getHeight(tree.right)
+    if left_h <= right_h:
+        return right_h + 1
+    else:
+        return left_h + 1
 
 
 if __name__ == "__main__":
@@ -205,6 +214,7 @@ if __name__ == "__main__":
     arr = [5,3,1,4,8,6,10]
     for i in arr:
         bst.insert(i)
+    print("Height of tree is:",getHeight(bst.root))
     bst.inOrder()
     print("max:",bst.max().data)
     print("min:",bst.min().data)
@@ -226,6 +236,7 @@ if __name__ == "__main__":
     print("delete 8:",bst.delete(8))
     print("delete 5:",bst.delete(5))
     print("delete 20:",bst.delete(20))
+    print("Height of tree is:",getHeight(bst.root))
     bst.inOrder()
     print("max:",bst.max().data)
     print("min:",bst.min().data)
