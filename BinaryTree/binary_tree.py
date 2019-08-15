@@ -31,6 +31,9 @@ postOrder(r) = postOrder(r->left)->postOrder(r->right)->print r
 二叉查找树(Binary Search Tree)：支持动态数据集合的快速插入、删除、查找操作
 二叉查找树要求，在树中的任意一个节点，其左子树的每个节点的值都要小于这个节点的值，而其右子树的每个节点的值都大于这个节点的值。
 中序遍历二叉查找树，可以输出有序的数据序列，时间复杂度是O(n)，非常高效。
+支持重复数据的二叉查找树，有以下两种处理方法：
+1、二叉查找树中的每个节点通过链表等数据结构，把值相同的数据都存储在同一个节点上。
+2、把这个新插入的数据当作大于这个节点的值来处理，即将插入的数据放到这个节点的右子树。
 """
 class TreeNode(object):
     def __init__(self,value=None):
@@ -135,11 +138,11 @@ class BST(object):
         prev = None
         while p:
             prev = p
-            if value <= p.data:
+            if value < p.data:
                 p = p.left
             else:
                 p = p.right
-        if value <= prev.data:
+        if value < prev.data:
             prev.left = TreeNode(value)
             prev.left.parent = prev
             return prev.left
