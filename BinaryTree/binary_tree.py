@@ -30,13 +30,14 @@ postOrder(r) = postOrder(r->left)->postOrder(r->right)->print r
 
 二叉查找树(Binary Search Tree)：支持动态数据集合的快速插入、删除、查找操作
 二叉查找树要求，在树中的任意一个节点，其左子树的每个节点的值都要小于这个节点的值，而其右子树的每个节点的值都大于这个节点的值。
-
+中序遍历二叉查找树，可以输出有序的数据序列，时间复杂度是O(n)，非常高效。
 """
 class TreeNode(object):
     def __init__(self,value=None):
         self.data = value
         self.left = None
         self.right = None
+        self.parent = None
 
 class BST(object):
     def __init__(self):
@@ -52,6 +53,68 @@ class BST(object):
         self.__in_order(node.left)
         print(node.data,end=",")
         self.__in_order(node.right)
+
+    def max(self):
+        p = self.root
+        while p:
+            if p.right == None:
+                return p
+            p = p.right
+        return None
+
+    def min(self):
+        p = self.root
+        while p:
+            if p.left == None:
+                return p
+            p = p.left
+        return None
+
+    def predecessor(self,node):
+        p = node
+        if p != None:
+            maxP = p.left
+            if maxP != None:
+                while maxP:
+                    if maxP.right == None:
+                        break
+                    maxP = maxP.right
+                return maxP
+            else:
+                if p.parent == None:
+                    return None
+                else:
+                    while p.parent:
+                        if p.parent.right == p:
+                            return p.parent
+                        p = p.parent
+                    return None
+        else:
+            return None
+
+
+    def successor(self,node):
+        p = node
+        if p != None:
+            minP = p.right
+            if minP != None:
+                while minP:
+                    if minP.left == None:
+                        break
+                    minP = minP.left
+                return minP
+            else:
+                if p.parent == None:
+                    return None
+                else:
+                    while p.parent:
+                        if p.parent.left == p:
+                            return p.parent
+                        p = p.parent
+                    return None
+        else:
+            return None
+
 
     def find(self,value):
         p = self.root
@@ -78,9 +141,11 @@ class BST(object):
                 p = p.right
         if value <= prev.data:
             prev.left = TreeNode(value)
+            prev.left.parent = prev
             return prev.left
         else:
             prev.right = TreeNode(value)
+            prev.right.parent = prev
             return prev.right
 
     def delete(self,value):
@@ -113,6 +178,9 @@ class BST(object):
         else:
             child = None
 
+        if child != None:
+            child.parent = pp
+
         if pp == None:
             self.root = child
         elif pp.left == p:
@@ -132,13 +200,36 @@ if __name__ == "__main__":
     for i in arr:
         bst.insert(i)
     bst.inOrder()
-    print(bst.find(5).data)
-    print(bst.find(3).data)
-    print(bst.find(10).data)
-    print(bst.find(20))
-    print(bst.delete(10))
-    print(bst.delete(8))
-    print(bst.delete(5))
-    print(bst.delete(20))
+    print("max:",bst.max().data)
+    print("min:",bst.min().data)
+    print("find 5:",bst.find(5).data)
+    print("find 3:",bst.find(3).data)
+    print("find 10:",bst.find(10).data)
+    print("find 20:",bst.find(20))
+    print("predecessor of 5:",bst.predecessor(bst.find(5)).data)
+    print("successor of 5:",bst.successor(bst.find(5)).data)
+    print("predecessor of 1:",bst.predecessor(bst.find(1)))
+    print("successor of 1:",bst.successor(bst.find(1)).data)
+    print("predecessor of 10:",bst.predecessor(bst.find(10)).data)
+    print("successor of 10:",bst.successor(bst.find(10)))
+    print("predecessor of 6:",bst.predecessor(bst.find(6)).data)
+    print("successor of 4:",bst.successor(bst.find(4)).data)
+    print("predecessor of 20:",bst.predecessor(bst.find(20)))
+    print("successor of 20:",bst.successor(bst.find(20)))
+    print("delete 10:",bst.delete(10))
+    print("delete 8:",bst.delete(8))
+    print("delete 5:",bst.delete(5))
+    print("delete 20:",bst.delete(20))
     bst.inOrder()
-
+    print("max:",bst.max().data)
+    print("min:",bst.min().data)
+    print("predecessor of 1:",bst.predecessor(bst.find(1)))
+    print("successor of 1:",bst.successor(bst.find(1)).data)
+    print("predecessor of 3:",bst.predecessor(bst.find(3)).data)
+    print("successor of 3:",bst.successor(bst.find(3)).data)
+    print("predecessor of 4:",bst.predecessor(bst.find(4)).data)
+    print("successor of 4:",bst.successor(bst.find(4)).data)
+    print("predecessor of 6:",bst.predecessor(bst.find(6)).data)
+    print("successor of 6:",bst.successor(bst.find(6)))
+    print("predecessor of 5:",bst.predecessor(bst.find(5)))
+    print("successor of 5:",bst.successor(bst.find(5)))
