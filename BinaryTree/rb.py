@@ -45,7 +45,6 @@ from __future__ import print_function
 分析快速排序的平均时间复杂度
 分析斐波那契数列的时间复杂度
 分析全排列的时间复杂度
-
 """
 ##全排列
 def Permutations(arr,n,k):
