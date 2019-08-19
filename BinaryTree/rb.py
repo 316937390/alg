@@ -41,8 +41,29 @@ from __future__ import print_function
     case3：如果关注节点是a，它的兄弟节点c是黑色，并且c的左子节点d是红色，c的右子节点e是黑色
     case4：如果关注节点是a，它的兄弟节点c是黑色，并且c的右子节点是红色
 
+递归树：借助树来求解递归算法的时间复杂度。
+分析快速排序的平均时间复杂度
+分析斐波那契数列的时间复杂度
+分析全排列的时间复杂度
+
 """
+##全排列
+def Permutations(arr,n,k):
+    if k == 1:
+        for i in range(n):
+            print(arr[i],end=" ")
+        print("")
+    for i in range(k):
+        tmp = arr[i]
+        arr[i] = arr[k-1]
+        arr[k-1] = tmp
+        Permutations(arr,n,k-1)
+        tmp = arr[i]
+        arr[i] = arr[k-1]
+        arr[k-1] = tmp
 
 
 if __name__ == "__main__":
-    pass
+    ##测试全排列
+    arr = [1,2,3,4]
+    Permutations(arr,len(arr),len(arr))
