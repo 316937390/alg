@@ -21,6 +21,17 @@ from __future__ import print_function
 实际开发中，为什么快速排序要比堆排序性能好？
 1、堆排序数据访问的方式没有快速排序友好。对于快速排序来说，数据是顺序访问的，而对于堆排序来说，数据是跳着访问的，这样对CPU缓存不友好。
 2、对于同样的数据，在排序过程中，堆排序算法的数据交换次数要多于快速排序。
+
+堆的应用：
+1、优先级队列
+2、求Top K
+3、求中位数
+
+堆可以看作优先级队列。往优先级队列中插入一个元素，就相当于往堆中插入一个元素；从优先级队列中取出优先级最高的元素，就相当于取出堆顶元素。
+优先级队列的应用：
+    （1）合并有序小文件：100个小文件，每个文件的大小是100MB，每个文件中存储的是有序的字符串，希望将这些有序的小文件合并成一个有序的大文件。（用一个小顶堆存储字符串）
+    （2）高性能计时器。（按照任务设定的执行时间，将这些任务存储在优先级队列中，队列头部即小顶堆的堆顶就是最先执行的任务）
+
 """
 ##大顶堆
 class Heap(object):
@@ -98,6 +109,49 @@ def heapsort(arr,n):
         heapify(arr,k,1)
 
 
+class PriorityQueue(object):
+    """用小顶堆实现"""
+    def __init__(self,capacity):
+        self.data = [None]*(capacity+1)
+        self.capacity = capacity
+        self.count = 0
+
+    def enqueue(self,value):
+        if self.count >= self.capacity:
+            return False
+        self.count += 1
+        self.data[self.count] = value
+        i = self.count
+        while (i>>1) > 0 and self.data[i] < self.data[(i>>1)]:
+            tmp = self.data[(i>>1)]
+            self.data[(i>>1)] = self.data[i]
+            self.data[i] = tmp
+            i = (i>>1)
+        return True
+
+    def dequeue(self):
+        if self.count == 0:
+            return None
+        ret = self.data[1]
+        self.data[1] = self.data[self.count]
+        self.count -= 1
+        self.heapify(1)
+        return ret
+
+    def heapify(self,i):
+        while True:
+            minPos = i
+            if i*2 <= self.count and self.data[i] > self.data[i*2]:
+                minPos = i*2
+            if i*2+1 <= self.count and self.data[minPos] > self.data[i*2+1]:
+                minPos = i*2+1
+            if minPos == i:
+                break
+            tmp = self.data[i]
+            self.data[i] = self.data[minPos]
+            self.data[minPos] = tmp
+            i = minPos
+
 if __name__ == "__main__":
     ##测试堆
     heap = Heap(20)
@@ -118,3 +172,11 @@ if __name__ == "__main__":
     print(arr_1)
     heapsort(arr_1,20)
     print("heapsort:",arr_1)
+    ##测试优先级队列
+    pq = PriorityQueue(16)
+    for i in range(20,0,-1):
+        pq.enqueue(i)
+    print(pq.data,pq.count)
+    for i in range(5):
+        print("dequeue:",pq.dequeue())
+        print(pq.data,pq.count)
