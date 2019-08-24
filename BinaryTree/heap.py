@@ -34,11 +34,14 @@ from __future__ import print_function
 
 利用堆求Top K：维护一个大小为K的小顶堆，添加数据时，如果比堆顶元素大，就把堆顶元素删除，并且将这个数据插入到堆中；如果比堆顶元素小，则不做处理。
 
-利用堆求中位数：借助堆，不用排序就可以高效地实现求中位数；需要维护两个堆，一个大顶堆，一个小顶堆，大顶堆中存储前半部分数据，小顶堆中存储后半部分数据，且小顶堆中数据都大于大顶堆中数据。
-
+利用堆求中位数：借助堆，不用排序就可以高效地实现求中位数。
+    需要维护两个堆，一个大顶堆，一个小顶堆，大顶堆中存储前半部分数据，小顶堆中存储后半部分数据，且小顶堆中数据都大于大顶堆中数据。
+    如果新加入的数据小于等于大顶堆的堆顶元素，就将这个数据插入到大顶堆；否则，就将这个数据插入到小顶堆。
+    如果n是偶数，两个堆中的数据个数都是n/2，如果n是奇数，大顶堆有（n/2 + 1）个数据，小顶堆有n/2个数据。
+    为了满足个数的约定，我们可以从一个堆中不停地将堆顶元素移动到另一个堆，这样大顶堆的堆顶元素就是中位数了。
 """
 ##大顶堆
-class Heap(object):
+class MaxHeap(object):
     def __init__(self,capacity):
         self.data = [None]*(capacity+1)
         self.capacity = capacity
@@ -81,6 +84,52 @@ class Heap(object):
             self.data[maxPos] = tmp
             i = maxPos
 
+##小顶堆
+class MinHeap(object):
+    def __init__(self,capacity):
+        self.data = [None]*(capacity+1)
+        self.capacity = capacity
+        self.count = 0
+
+    def insert(self,value):
+        if self.count >= self.capacity:
+            return False
+        self.count += 1
+        self.data[self.count] = value
+        i = self.count
+        ##堆化
+        while (i>>1) > 0 and self.data[i] < self.data[(i>>1)]:
+            tmp = self.data[(i>>1)]
+            self.data[(i>>1)] = self.data[i]
+            self.data[i] = tmp
+            i = (i>>1)
+        return True
+
+    def removeMin(self):
+        if self.count == 0:
+            return False
+        self.data[1] = self.data[self.count]
+        self.count -= 1
+        ##堆化
+        self.heapify(1)
+        return True
+
+    def heapify(self,i):
+        while True:
+            minPos = i
+            if i*2 <= self.count and self.data[i] > self.data[i*2]:
+                minPos = i*2
+            if i*2+1 <= self.count and self.data[minPos] > self.data[i*2+1]:
+                minPos = i*2+1
+            if minPos == i:
+                break
+            tmp = self.data[i]
+            self.data[i] = self.data[minPos]
+            self.data[minPos] = tmp
+            i = minPos
+
+
+##堆排序
 def buildHeap(arr,n):
     i = (n>>1)
     while i >= 1:
@@ -101,7 +150,6 @@ def heapify(arr,n,i):
         arr[maxPos] = tmp
         i = maxPos
 
-
 def heapsort(arr,n):
     buildHeap(arr,n)
     k = n
@@ -112,7 +160,7 @@ def heapsort(arr,n):
         k -= 1
         heapify(arr,k,1)
 
-
+##优先级队列
 class PriorityQueue(object):
     """用小顶堆实现"""
     def __init__(self,capacity):
@@ -158,12 +206,18 @@ class PriorityQueue(object):
 
 if __name__ == "__main__":
     ##测试堆
-    heap = Heap(20)
+    heap = MaxHeap(20)
     for i in range(25):
         heap.insert(i)
     print(heap.data,heap.count)
     heap.removeMax()
     print(heap.data,heap.count)
+    hp = MinHeap(10)
+    for i in range(20,0,-1):
+        hp.insert(i)
+    print(hp.data,hp.count)
+    hp.removeMin()
+    print(hp.data,hp.count)
     ##测试堆排序
     arr = [None]
     for i in range(15):
