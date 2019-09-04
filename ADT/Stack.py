@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
-from List import LNode,LinkedList
+from ADT.List import LNode,LinkedList
 
 """
 栈：是一种操作受限的线性表，只允许在一端插入和删除数据

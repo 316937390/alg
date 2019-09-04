@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
-from List import LNode,LinkedList
+from ADT.List import LNode,LinkedList
 
 """
 队列：也是一种操作受限的线性表，先进先出。用数组实现的队列叫作顺序队列，用链表实现的队列叫作链式队列。
