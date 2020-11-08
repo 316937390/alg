@@ -59,7 +59,6 @@ def inOrder(node):
       else:
         finished = True # leaf
         stack.pop()
-      
 
 """
 inOrder
@@ -92,24 +91,26 @@ stack                   print
 def postOrder(node):
   stack = stack.stack()
   stack.push(node)
+  lastest = None
   while not stack.empty():
     top = stack.top()
-    if top.left != None:
-      stack.push(top.left)
-    elif top.right != None:
-      stack.push(top.right)
-    else:
+    if top.left == lastest and top.right == None:
       print('{}'.format(top.data))
+      lastest = top
       stack.pop()
-    pass
-
-
-
-
-
-
-
-
+    elif top.right == lastest:
+      print('{}'.format(top.data))
+      lastest = top
+      stack.pop()
+    else:
+      if top.right != None:
+        stack.push(top.right)
+      if top.left != None:
+        stack.push(top.left)
+      if top.left == None and top.right == None:
+        print('{}'.format(top.data))
+        lastest = top
+        stack.pop()
 
 """
 postOrder
@@ -121,18 +122,19 @@ postOrder
 
 stack                   print
 2 <--
-2 1 <--
-2 1 3 <--
+2 4 1 <--
+2 4 1 5 3 <--
                           3
-2 1 5 <--                  
+2 4 1 5 <--
                           5
-2 1 <--                    
+2 4 1 <--
                           1
-2 4 <--                      
+2 4 <--
 2 4 7 <--
                           7
-2 4 <--                      
+2 4 <--
                           4
-2 <--                        
+2 <--
                           2
+<--
 """
