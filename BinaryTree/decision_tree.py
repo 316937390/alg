@@ -10,7 +10,7 @@ class DecisionTreeNode(object):
 		self.childs = []
 		self.isLeaf = False
 		self.tag = {}
-		self.matchFunc = None
+		self.matchFunc = None # 特征测试函数
 
 	def addChild(self, node):
 		assert self.isLeaf == False
