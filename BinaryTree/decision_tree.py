@@ -47,6 +47,7 @@ root.addChild(seniorNode)
 
 nextNode = root.featureTest({'age':35, 'gender':'male'})
 print(nextNode.__dict__)
+print('root:{}'.format(root.__dict__))
 
 
 
