@@ -61,7 +61,7 @@ def quick_sort_c(arr,p,r):
         return
     q = partition(arr,p,r)
     quick_sort_c(arr,p,q-1)
-    quick_sort_c(arr,p+1,r)
+    quick_sort_c(arr,q+1,r)
 
 def partition(arr,p,r):
     pivot = arr[r]
