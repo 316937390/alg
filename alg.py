@@ -5,7 +5,7 @@ from __future__ import print_function ##使用python3中给end参数赋空(值)�
 lst = [4,5,6,1,2,3]
 def find(a, low, high, value):
     while low <= high:
-        mid  = low + (high-low)/2
+        mid  = low + ((high-low)>>1)
         if a[mid] == value:
             return mid
         ##前半部分是有序的，后半部分是循环有序
@@ -30,7 +30,7 @@ print(find(lst,0,len(lst)-1,2))
 print(find(lst,0,len(lst)-1,3))
 print(find(lst,0,len(lst)-1,7))
 
-import Queue
+from queue import Queue
 """
 q = Queue.Queue()
 
@@ -47,7 +47,7 @@ def bfs(s,deg):
     v = 8 #顶点个数
     visited = {}
     prev = {}
-    que = Queue.Queue()
+    que = Queue()
     for i in range(v):
         visited[i] = False
         prev[i] = -1
