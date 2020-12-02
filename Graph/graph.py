@@ -21,5 +21,33 @@ from __future__ import print_function
 """
 
 
+def RoundTripMatrix(mat):
+	row = len(mat)
+	col = len(mat[0])
+	for i in range(row):
+		if i % 2 == 0:
+			for j in range(col):
+				print('{} '.format(mat[i][j]),end='')
+		else:
+			for j in range(col):
+				print('{} '.format(mat[i][col-1-j]),end='')
+
+def RoundTripMatrix_c(mat):
+	row = len(mat)
+	col = len(mat[0])
+	for i in range(col):
+		if i % 2 == 0:
+			for j in range(row):
+				print('{} '.format(mat[j][i]),end='')
+		else:
+			for j in range(row):
+				print('{} '.format(mat[row-1-j][i]),end='')
+
 if __name__ == "__main__":
-    pass
+    # 矩阵的回文打印
+    mat = [[1,2,3],[4,5,6],[7,8,9],[10,11,12]]
+    ## 预期输出为: 1 2 3 6 5 4 7 8 9 12 11 10
+    RoundTripMatrix(mat)
+    print('')
+    ## 预期输出为: 1 4 7 10 11 8 5 2 3 6 9 12
+    RoundTripMatrix_c(mat)
