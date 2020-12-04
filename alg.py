@@ -392,7 +392,7 @@ def lvst_huisu(i,j,dist):
         lvst_huisu(i+1,j,dist+1)
         lvst_huisu(i,j+1,dist+1)
         lvst_huisu(i+1,j+1,dist+1)
-lvst_huisu(5,0,0)
+lvst_huisu(0,0,0)
 print("莱文斯坦距离，回溯法：%d" % minDist)
 ##莱文斯坦距离的动态规划解法
 states_lvst = {0:{0:0}}
@@ -425,7 +425,7 @@ def lvst_dp(i,j):
         else:
             states_lvst[i][j] = tmp
         return states_lvst[i][j]
-print("莱文斯坦距离，动态规划法：%d" % lvst_dp(5,0))
+print("莱文斯坦距离，动态规划法：%d" % lvst_dp(5,5))
 
 
 ##最长递增子序列
