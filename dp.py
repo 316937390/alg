@@ -73,6 +73,7 @@ searchGem(A,0,3,3,None,0,{})
 print('max gems: {}, path:{}'.format(max_G,path))
 
 '''
+动态规划解法
 记录状态：[位置，最大gem数]
 '''
 def dp_gem(arr):
