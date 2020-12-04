@@ -337,7 +337,7 @@ def lcs_huisu(i,j,mlen):
         lcs_huisu(i+1,j,mlen)
         lcs_huisu(i,j+1,mlen)
 
-lcs_huisu(5,0,0)
+lcs_huisu(0,0,0)
 print("最长公共子串长度，回溯法：%d" % maxV)
 #最长公共子串长度的动态规划解法
 states_lcs = {0:{0:1}}
@@ -370,7 +370,7 @@ def lcs_dp(i,j):
         else:
             states_lcs[i][j] = tmp
         return states_lcs[i][j]
-print("最长公共子串长度，动态规划法：%d" % lcs_dp(5,0))
+print("最长公共子串长度，动态规划法：%d" % lcs_dp(5,5))
 
 ##莱文斯坦距离的回溯解法
 minDist = None
