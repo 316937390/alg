@@ -96,3 +96,11 @@ def dp_gem(arr):
     print('max gems: {}'.format(result[-1]))
 
 dp_gem(A)
+
+
+'''
+Given a string s, partition s such that every substring of the partition is a palindrome.
+Return the minimum cuts needed for a palindrome partitioning of s.
+给定一个字符串s，分区s使得分区的每个子字符串都是一个回文。
+返回s的回文分区所需的最小切数。
+'''
