@@ -436,7 +436,7 @@ def las_dp(i):
         return states_las[i]
     prev_arr = las_dp(i-1)
     len_prev = len(prev_arr)
-    if input_arr[i] < prev_arr[len_prev-1] and input_arr[i] > prev_arr[len_prev-2]:
+    if input_arr[i] < prev_arr[len_prev-1] and input_arr[i] >= prev_arr[len_prev-2]:
         tmp_arr = [prev_arr[k] for k in range(len_prev-1)]
         tmp_arr.append(input_arr[i])
         states_las[i] = tmp_arr
