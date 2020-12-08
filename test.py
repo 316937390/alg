@@ -71,3 +71,54 @@ def maxFactor(f, g):
     return g
 
 print("max factor:{}".format(maxFactor(546,325)))
+
+
+
+def find_3_times_str():
+    '''
+    字符串中连续出现3次的字符
+    '''
+    result = []
+    string = '123333456abcccddd'
+    n = len(string)
+    i = 0
+    while i < n:
+        tmp = string[i]
+        if i+1 < n and i+2 < n:
+            if string[i+1]==tmp and string[i+2]==tmp:
+                j = i+3
+                while j < n:
+                    if string[j] == tmp:
+                        j += 1
+                    else:
+                        break
+                if j-i == 3:
+                    result.append(i)
+                i = j
+            else:
+                i += 1
+        else:
+            i += 1
+    print('find_3_times_str:{}'.format(result))
+
+
+find_3_times_str()
+
+
+def find_common_prefix():
+    arr = ['xxxabc','xxx','xxmm']
+    arr_tmp = sorted(arr, key=lambda x:len(x))
+    n = len(arr_tmp[0])
+    m = len(arr_tmp)
+    result = None
+    for i in range(n):
+        sub_str = arr_tmp[0][0:i+1]
+        flag = True
+        for j in range(1,m):
+            if sub_str != arr_tmp[j][0:i+1]:
+                flag = False
+        if flag:
+            result = sub_str
+    print('find_common_prefix:{}'.format(result))
+
+find_common_prefix()
