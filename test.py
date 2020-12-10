@@ -122,3 +122,33 @@ def find_common_prefix():
     print('find_common_prefix:{}'.format(result))
 
 find_common_prefix()
+
+'''
+最长回文子串
+'''
+result = ''
+def is_round(s,i,j):
+    while i <= j:
+        if s[i] != s[j]:
+            return False
+        i += 1
+        j -= 1
+    return True
+
+def find_longest_string(s,i,j):
+    global result
+    if i == j:
+        if len(result) == 0:
+            result = s[i]
+            return
+    if i > j:
+        return
+    if is_round(s,i,j):
+        tmp = s[i:j+1]
+        if len(tmp) > len(result):
+            result = tmp
+    find_longest_string(s,i,j-1)
+    find_longest_string(s,i+1,j)
+
+find_longest_string('abcdcb',0,5)
+print('longest huiwen sub_string:{}'.format(result))
