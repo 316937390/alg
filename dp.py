@@ -104,3 +104,46 @@ Return the minimum cuts needed for a palindrome partitioning of s.
 给定一个字符串s，分区s使得分区的每个子字符串都是一个回文。
 返回s的回文分区所需的最小切数。
 '''
+
+
+a = "mitcmu"
+b = "mtacnu"
+m = len(a)
+n = len(b)
+maxV = -1
+def lcs_huisu(i,j,mlen):
+    if i == m or j == n:
+        global maxV
+        if mlen > maxV:
+            maxV = mlen  
+        return
+    if a[i] == b[j]:
+        lcs_huisu(i+1,j+1,mlen+1)
+    else:
+        lcs_huisu(i+1,j,mlen)
+        lcs_huisu(i,j+1,mlen)
+
+lcs_huisu(0,0,0)
+print('lcs_huisu:{}'.format(maxV))
+
+
+max_string = ''
+def find_lcs(stringA,stringB,i,j,m,n):
+    '''
+    最长子串(子串是连续的字符)
+    '''
+    if i >= j or m >= n:
+        return
+    if stringA[i:j] == stringB[m:n]:
+        global max_string
+        tmp = stringA[i:j]
+        if len(tmp) > len(max_string):
+            max_string = tmp
+    else:
+        find_lcs(stringA,stringB,i,j-1,m,n-1)
+        find_lcs(stringA,stringB,i,j-1,m+1,n)
+        find_lcs(stringA,stringB,i+1,j,m,n-1)
+        find_lcs(stringA,stringB,i+1,j,m+1,n)
+
+find_lcs('abcde','avcdf',0,5,0,5)
+print('longest substring:{}'.format(max_string))
