@@ -111,20 +111,23 @@ b = "mtacnu"
 m = len(a)
 n = len(b)
 maxV = -1
-def lcs_huisu(i,j,mlen):
+max_sub_string = ''
+def lcs_huisu(i,j,mlen,curStr):
     if i == m or j == n:
         global maxV
+        global max_sub_string
         if mlen > maxV:
-            maxV = mlen  
+            maxV = mlen
+            max_sub_string = curStr
         return
     if a[i] == b[j]:
-        lcs_huisu(i+1,j+1,mlen+1)
+        lcs_huisu(i+1,j+1,mlen+1,curStr+a[i])
     else:
-        lcs_huisu(i+1,j,mlen)
-        lcs_huisu(i,j+1,mlen)
+        lcs_huisu(i+1,j,mlen,curStr)
+        lcs_huisu(i,j+1,mlen,curStr)
 
-lcs_huisu(0,0,0)
-print('lcs_huisu:{}'.format(maxV))
+lcs_huisu(0,0,0,'')
+print('lcs_huisu:{},{}'.format(maxV,max_sub_string))
 
 
 max_string = ''
