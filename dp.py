@@ -169,9 +169,7 @@ def spread_money(pn,prev):
         if cur == n:
             result_spread.append({k:v for k,v in prev.items()})
             return
-        elif cur > n:
-            return
-        elif cur < n:
+        else:
             return
     for i in range(1,n-cur+1):
         prev[pn] = i
