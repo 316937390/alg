@@ -150,3 +150,33 @@ def find_lcs(stringA,stringB,i,j,m,n):
 
 find_lcs('abcde','avcdf',0,5,0,5)
 print('longest substring:{}'.format(max_string))
+
+
+'''
+发红包：n元钱分给m个人
+回溯搜索法：时间复杂度O(n^m)
+'''
+n = 5   #钱数
+m = 2   #人数
+result_spread = []
+def spread_money(pn,prev):
+    global m
+    global n
+    cur = sum([ v for k,v in prev.items() if k < pn ])
+    if cur > n:
+        return
+    if pn == m:
+        if cur == n:
+            result_spread.append({k:v for k,v in prev.items()})
+            return
+        elif cur > n:
+            return
+        elif cur < n:
+            return
+    for i in range(1,n-cur+1):
+        prev[pn] = i
+        spread_money(pn+1,prev)
+
+
+spread_money(0,{})
+print('distribute money: {}'.format(result_spread))
