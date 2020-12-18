@@ -152,3 +152,27 @@ def find_longest_string(s,i,j):
 
 find_longest_string('abcdcb',0,5)
 print('longest huiwen sub_string:{}'.format(result))
+
+
+
+
+'''
+查找第一个不重复的字符
+'''
+def find_first_uniq_c(string):
+    n = len(string)
+    c_num = {}
+    for i in range(n):
+        if c_num.get(string[i]) == None:
+            c_num[string[i]] = 1
+        else:
+            c_num[string[i]] += 1
+
+    tmp_list = [ k for k,v in c_num.items() if v == 1]
+    for i in string:
+        if i in tmp_list:
+            return i
+    return None
+
+char = find_first_uniq_c('abac')
+print('first uniq character:{}'.format(char))
