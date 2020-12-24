@@ -32,12 +32,11 @@
 
 团队管理：
 	OKR，明确目标，优先级排序，突出重点。
-	deadline意识，数据说话，不断反馈优化，形成闭环。
-	排兵布阵，明确规范。
+	deadline意识，充分调研，数据说话，不断反馈优化，形成闭环。（周会、站立会议、项目管理工具）
+	排兵布阵，明确规范，实事求是。
 	成本意识。
 	个人成长。
 
 
+SMART原则：specific measurable attainable relevant time-based
 
-
-	
