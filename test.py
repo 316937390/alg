@@ -176,3 +176,44 @@ def find_first_uniq_c(string):
 
 char = find_first_uniq_c('abac')
 print('first uniq character:{}'.format(char))
+
+
+
+'''
+整数的进制转换
+'''
+enum_map = {0:'0',1:'1',2:'2',3:'3',4:'4',5:'5',6:'6',7:'7',8:'8',9:'9',10:'a',11:'b',12:'c',13:'d',14:'e',15:'f'}
+def convert_number(m,n):
+    result = []
+    t = -1
+    while t != 0:
+        r = m % n
+        t = m // n
+        m = t
+        result.append(r)
+    result.reverse()
+    result_tmp = [enum_map[v] for _,v in enumerate(result)]
+    r = ''.join(result_tmp)
+    return r
+
+print('convert to: {}'.format(convert_number(16,10)))
+print('convert to: {}'.format(convert_number(16,2)))
+print('convert to: {}'.format(convert_number(16,16)))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
