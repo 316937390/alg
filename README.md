@@ -40,3 +40,7 @@
 
 SMART原则：specific measurable attainable relevant time-based
 
+
+认知和覆盖：划分成四个象限，已知且已覆盖、已知且未覆盖、未知且已覆盖、未知且未覆盖。
+未覆盖->已覆盖：技术
+未知  ->  已知：业务
