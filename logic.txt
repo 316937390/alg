@@ -2,3 +2,7 @@
 一个是两种药片，每种有两个，一个人需要早上吃两种药片各一个，现在这四个药片混在一起了这个人什么方法吃。
 
 一个5L，一个6L的瓶子，要得到3L的水，问什么方法?
+
+print (list(set(a).difference(set(b)))) # 差集，a中有而b中没有
+print (list(set(a).union(set(b))))  # 并集
+print (list(set(a).intersection(set(b)))) # 交集

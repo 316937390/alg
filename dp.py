@@ -178,3 +178,4 @@ def spread_money(pn,prev):
 
 spread_money(0,{})
 print('distribute money: {}'.format(result_spread))
+

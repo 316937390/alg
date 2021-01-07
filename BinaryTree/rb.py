@@ -62,7 +62,23 @@ def Permutations(arr,n,k):
         arr[k-1] = tmp
 
 
+'''
+全排列 回溯法
+'''
+def Pmt(prev,dep,arr,n):
+    if dep == n:
+        tmp = [str(v) for _,v in prev.items()]
+        print(' '.join(tmp))
+        return
+    cur = [v for k,v in prev.items() if k < dep]
+    diff = list(set(arr).difference(set(cur)))
+    for i in diff:
+        prev[dep] = i
+        Pmt(prev,dep+1,arr,n)
+
 if __name__ == "__main__":
     ##测试全排列
     arr = [1,2,3,4]
     Permutations(arr,len(arr),len(arr))
+    print('huisu Permutations:')
+    Pmt({},0,arr,len(arr))
